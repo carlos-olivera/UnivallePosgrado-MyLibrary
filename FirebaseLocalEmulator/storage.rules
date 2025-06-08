@@ -1,0 +1,26 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // **REGLAS DE STORAGE EDUCATIVAS PARA MYLIBRARY** 📷
+    
+    // Regla 1: Fotos de perfil - Solo el propietario puede subir/modificar
+    // Ruta: profile-images/{userId}/{filename}
+    match /profile-images/{userId}/{allPaths=**} {
+      // Solo el usuario propietario puede subir su foto de perfil
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Regla 2: Imágenes temporales para testing (desarrollo)
+    // Permite subir imágenes temporales para propósitos educativos
+    match /temp-images/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Regla 3: Archivos públicos (solo lectura)
+    // Para recursos estáticos como placeholders o imágenes por defecto
+    match /public/{allPaths=**} {
+      allow read: if true; // Lectura pública
+      allow write: if false; // Solo administradores (no implementado)
+    }
+  }
+}
