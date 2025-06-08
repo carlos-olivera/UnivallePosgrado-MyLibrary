@@ -301,30 +301,8 @@ const LoginScreen = ({ navigation }) => {
             </TextButton>
           </View>
 
-          {/* **SECCIÓN DEMO EDUCATIVA** 🎓 */}
-          <View style={dynamicStyles.demoSection}>
-            <Text style={dynamicStyles.demoTitle}>
-              🎓 Modo Demo Educativo
-            </Text>
-            <Text style={dynamicStyles.demoText}>
-              Usa las credenciales de prueba para explorar la aplicación
-            </Text>
-            
-            <Button
-              variant="outline"
-              size="small"
-              onPress={handleDemoLogin}
-              style={{ marginTop: theme.spacing.sm }}
-              testID="demo-login-button"
-            >
-              Acceso Demo
-            </Button>
-          </View>
-
           {/* **DIVIDER** ➖ */}
           <View style={dynamicStyles.dividerContainer}>
-            <View style={dynamicStyles.dividerLine} />
-            <Text style={dynamicStyles.dividerText}>o</Text>
             <View style={dynamicStyles.dividerLine} />
           </View>
 

@@ -92,18 +92,4 @@ const LoadingSpinner = ({
   );
 };
 
-// **VARIANTES PREDEFINIDAS** 🎯
-
-export const LoadingSpinnerSmall = (props) => (
-  <LoadingSpinner size="small" {...props} />
-);
-
-export const LoadingSpinnerLarge = (props) => (
-  <LoadingSpinner size="large" {...props} />
-);
-
-export const LoadingOverlay = (props) => (
-  <LoadingSpinner overlay={true} {...props} />
-);
-
 export default LoadingSpinner;

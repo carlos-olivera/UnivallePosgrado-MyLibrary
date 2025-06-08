@@ -2,7 +2,7 @@
   "name": "mylibrary-react-native",
   "version": "1.0.0",
   "description": "Cliente React Native para el proyecto educativo MyLibrary",
-  "main": "App.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
