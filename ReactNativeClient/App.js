@@ -1,11 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 // Context Providers
 import { AuthProvider } from './src/context/AuthContext';
-import { LibraryProvider } from './src/context/LibraryContext';
 import { ToastProvider } from './src/context/ToastContext';
 
 // Navigation
@@ -29,23 +27,18 @@ import { theme } from './src/constants/theme';
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        {/* 
-          **PATRÓN DE PROVIDERS ANIDADOS** 🎯
-          Los providers se anidam para proporcionar diferentes contextos:
-          1. AuthProvider: Estado de autenticación global
-          2. LibraryProvider: Estado de la librería personal
-          3. ToastProvider: Sistema de notificaciones
-        */}
-        <AuthProvider>
-          <LibraryProvider>
-            <ToastProvider>
-              <StatusBar style="auto" />
-              <AppNavigator />
-            </ToastProvider>
-          </LibraryProvider>
-        </AuthProvider>
-      </NavigationContainer>
+      {/* 
+        **PATRÓN DE PROVIDERS ANIDADOS** 🎯
+        Los providers se anidan para proporcionar diferentes contextos:
+        1. AuthProvider: Estado de autenticación global
+        2. ToastProvider: Sistema de notificaciones
+      */}
+      <AuthProvider>
+        <ToastProvider>
+          <StatusBar style="auto" />
+          <AppNavigator />
+        </ToastProvider>
+      </AuthProvider>
     </PaperProvider>
   );
 }
