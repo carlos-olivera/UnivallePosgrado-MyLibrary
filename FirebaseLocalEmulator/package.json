@@ -5,7 +5,13 @@
   "scripts": {
     "start": "firebase emulators:start --import=./data --export-on-exit=./data",
     "start:fresh": "firebase emulators:start",
-    "seed": "node scripts/seed-data.js",
+    "seed": "node scripts/seed-with-check.js",
+    "seed:direct": "node scripts/seed-data.js",
+    "clean-ports": "node scripts/clean-ports.js",
+    "clean-ports:check": "node scripts/clean-ports.js --check",
+    "clean-ports:force": "node scripts/clean-ports.js --force",
+    "verify-data": "node scripts/verify-data.js",
+    "debug-ui": "node scripts/debug-ui.js",
     "setup": "npm install && firebase init"
   },
   "keywords": ["firebase", "emulator", "education", "mylibrary"],

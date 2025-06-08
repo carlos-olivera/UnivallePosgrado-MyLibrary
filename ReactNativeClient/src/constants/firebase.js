@@ -13,7 +13,7 @@ export const EMULATOR_CONFIG = {
   STORAGE_URL: 'http://localhost:9199',
   
   // Configuración del proyecto demo
-  PROJECT_ID: 'mylibrary-demo',
+  PROJECT_ID: 'univalle-mylibrary',
   
   // Settings para emuladores
   FIRESTORE_SETTINGS: {
@@ -25,9 +25,9 @@ export const EMULATOR_CONFIG = {
 // Configuración de Firebase (reemplazar con tu configuración real)
 export const FIREBASE_CONFIG = {
   apiKey: "demo-api-key",
-  authDomain: "mylibrary-demo.firebaseapp.com",
-  projectId: "mylibrary-demo",
-  storageBucket: "mylibrary-demo.appspot.com",
+  authDomain: "univalle-mylibrary.firebaseapp.com",
+  projectId: "univalle-mylibrary",
+  storageBucket: "univalle-mylibrary.appspot.com",
   messagingSenderId: "123456789",
   appId: "1:123456789:web:abcdef123456"
 };

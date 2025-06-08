@@ -8,11 +8,14 @@ process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
 process.env.FIREBASE_AUTH_EMULATOR_HOST = 'localhost:9099';
 
 // Inicializar Firebase Admin SDK
-admin.initializeApp({
-  projectId: 'mylibrary-demo'
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    projectId: 'univalle-mylibrary'
+  });
+}
 
 const db = admin.firestore();
+const auth = admin.auth();
 
 // **DATOS DE EJEMPLO EDUCATIVOS**
 const seedData = {
@@ -32,6 +35,15 @@ const seedData = {
       email: 'estudiante2@example.com',
       nombre: 'Carlos',
       apellido: 'Rodríguez',
+      fotoPerfilUrl: null,
+      fechaCreacion: admin.firestore.FieldValue.serverTimestamp(),
+      fechaUltimaActividad: admin.firestore.FieldValue.serverTimestamp()
+    },
+    {
+      id: 'demo-app-user',
+      email: 'demo@mylibrary.com',
+      nombre: 'Usuario',
+      apellido: 'Demo',
       fotoPerfilUrl: null,
       fechaCreacion: admin.firestore.FieldValue.serverTimestamp(),
       fechaUltimaActividad: admin.firestore.FieldValue.serverTimestamp()
@@ -107,16 +119,49 @@ async function seedDatabase() {
   console.log('🌱 Iniciando el seeding de la base de datos...');
 
   try {
-    // 1. Crear usuarios de ejemplo
-    console.log('👥 Creando usuarios de ejemplo...');
+    // 1. Crear usuarios en Firebase Authentication
+    console.log('🔐 Creando usuarios en Authentication...');
     for (const user of seedData.users) {
-      await db.collection('users').doc(user.id).set(user);
-      console.log(`   ✅ Usuario creado: ${user.email}`);
+      try {
+        const authUser = await auth.createUser({
+          uid: user.id,
+          email: user.email,
+          password: 'demo123456', // Contraseña para testing
+          displayName: `${user.nombre} ${user.apellido}`,
+          emailVerified: true
+        });
+        console.log(`   ✅ Usuario Auth creado: ${authUser.email}`);
+      } catch (error) {
+        if (error.code === 'auth/uid-already-exists') {
+          console.log(`   ♻️ Usuario Auth ya existe: ${user.email}`);
+        } else {
+          console.error(`   ❌ Error creando usuario Auth ${user.email}:`, error.message);
+        }
+      }
     }
 
-    // 2. Crear librerías personales
+    // 2. Crear documentos de usuarios en Firestore
+    console.log('👥 Creando documentos de usuarios en Firestore...');
+    for (const user of seedData.users) {
+      await db.collection('users').doc(user.id).set(user);
+      console.log(`   ✅ Documento de usuario creado: ${user.email}`);
+    }
+
+    // 3. Crear librerías personales
     console.log('📚 Creando librerías personales...');
     for (const library of seedData.libraryBooks) {
+      // Primero crear el documento padre de la librería
+      await db
+        .collection('libraries')
+        .doc(library.userId)
+        .set({
+          userId: library.userId,
+          fechaCreacion: admin.firestore.FieldValue.serverTimestamp(),
+          totalLibros: library.books.length
+        });
+      console.log(`   ✅ Librería creada para usuario: ${library.userId}`);
+      
+      // Luego agregar los libros a la subcollección
       for (const book of library.books) {
         await db
           .collection('libraries')
@@ -128,7 +173,7 @@ async function seedDatabase() {
       }
     }
 
-    // 3. Crear reseñas de ejemplo
+    // 4. Crear reseñas de ejemplo
     console.log('⭐ Creando reseñas de ejemplo...');
     for (const review of seedData.reviews) {
       await db.collection('reviews').doc(review.id).set(review);
@@ -137,6 +182,15 @@ async function seedDatabase() {
 
     console.log('🎉 ¡Seeding completado exitosamente!');
     console.log('💡 Puedes ver los datos en la UI del emulador: http://localhost:4000');
+    console.log('');
+    console.log('👤 Usuarios de prueba creados:');
+    console.log('   📧 estudiante1@example.com - Contraseña: demo123456');
+    console.log('   📧 estudiante2@example.com - Contraseña: demo123456');
+    console.log('   📧 demo@mylibrary.com - Contraseña: demo123456 (para app)');
+    console.log('');
+    console.log('🔍 Para verificar:');
+    console.log('   • Authentication: http://localhost:4000 → Authentication');
+    console.log('   • Firestore: http://localhost:4000 → Firestore → Data');
     
   } catch (error) {
     console.error('❌ Error durante el seeding:', error);
