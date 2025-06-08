@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button as PaperButton } from 'react-native-paper';
+import { Button as PaperButton, ActivityIndicator } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
-import { ButtonSpinner } from './LoadingSpinner';
 
 /**
  * **COMPONENTE BUTTON EDUCATIVO** 🔘
@@ -238,6 +237,17 @@ export const FloatingActionButton = ({ icon, onPress, style, ...props }) => {
       accessibilityLabel="Botón de acción flotante"
       accessibilityRole="button"
       {...props}
+    />
+  );
+};
+
+// **SPINNER PARA BOTONES** 🔘
+export const ButtonSpinner = ({ color = 'white', size = 20 }) => {
+  return (
+    <ActivityIndicator 
+      size={size}
+      color={color}
+      style={{ marginRight: 8 }}
     />
   );
 };

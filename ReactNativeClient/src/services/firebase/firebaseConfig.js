@@ -75,21 +75,27 @@ const setupEmulators = (config) => {
     console.log('🔧 Configurando emuladores de Firebase...');
 
     // Configurar emulador de Authentication
-    if (!auth._delegate._authBackend?.app) {
+    try {
       connectAuthEmulator(auth, config.AUTH_URL, { disableWarnings: true });
       console.log('   ✅ Auth Emulator conectado en', config.AUTH_URL);
+    } catch (authError) {
+      console.log('   ⚠️ Auth Emulator ya conectado:', authError.message);
     }
 
     // Configurar emulador de Firestore
-    if (!db._delegate._terminated) {
+    try {
       connectFirestoreEmulator(db, 'localhost', 8080);
       console.log('   ✅ Firestore Emulator conectado en', config.FIRESTORE_URL);
+    } catch (firestoreError) {
+      console.log('   ⚠️ Firestore Emulator ya conectado:', firestoreError.message);
     }
 
     // Configurar emulador de Storage
-    if (!storage._delegate._host) {
+    try {
       connectStorageEmulator(storage, 'localhost', 9199);
       console.log('   ✅ Storage Emulator conectado en', config.STORAGE_URL);
+    } catch (storageError) {
+      console.log('   ⚠️ Storage Emulator ya conectado:', storageError.message);
     }
 
     console.log('🎉 Emuladores configurados correctamente');

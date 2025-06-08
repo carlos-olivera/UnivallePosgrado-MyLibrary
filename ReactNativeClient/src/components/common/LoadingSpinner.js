@@ -106,15 +106,4 @@ export const LoadingOverlay = (props) => (
   <LoadingSpinner overlay={true} {...props} />
 );
 
-// **SPINNER PARA BOTONES** 🔘
-export const ButtonSpinner = ({ color = 'white', size = 20 }) => {
-  return (
-    <ActivityIndicator 
-      size={size}
-      color={color}
-      style={{ marginRight: 8 }}
-    />
-  );
-};
-
 export default LoadingSpinner;

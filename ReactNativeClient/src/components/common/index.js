@@ -8,9 +8,11 @@
  */
 
 // **COMPONENTES BÁSICOS** ⚡
-export { default as LoadingSpinner, LoadingSpinnerSmall, LoadingSpinnerLarge, LoadingOverlay, ButtonSpinner } from './LoadingSpinner';
-export { default as Button, PrimaryButton, SecondaryButton, OutlineButton, TextButton, DangerButton, SmallButton, LargeButton, FullWidthButton, LoadingButton, IconButton, FloatingActionButton } from './Button';
-export { default as Card, DefaultCard, OutlinedCard, ElevatedCard, BookCard, StatsCard } from './Card';
+export { default as LoadingSpinner, LoadingSpinnerSmall, LoadingSpinnerLarge, LoadingOverlay } from './LoadingSpinner';
+export { default as Button, PrimaryButton, SecondaryButton, OutlineButton, TextButton, DangerButton, SmallButton, LargeButton, FullWidthButton, LoadingButton, IconButton, FloatingActionButton, ButtonSpinner } from './Button';
+export { default as Card, DefaultCard, OutlinedCard, ElevatedCard } from './Card';
+export { default as BookCard, CompactBookCard, DetailedBookCard, SimpleBookCard } from './BookCard';
+export { default as StatsCard, NumberStatsCard, PercentageStatsCard, CurrencyStatsCard } from './StatsCard';
 
 // **FEEDBACK Y NOTIFICACIONES** 📢
 export { default as Toast, SuccessToast, ErrorToast, WarningToast, InfoToast, useToast } from './Toast';

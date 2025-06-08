@@ -44,7 +44,7 @@ const StoreScreen = ({ navigation, route }) => {
   const [userLibrary, setUserLibrary] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setStoreError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -72,7 +72,7 @@ const StoreScreen = ({ navigation, route }) => {
   const loadInitialCatalog = useCallback(async () => {
     try {
       setLoading(true);
-      setError(null);
+      setStoreError(null);
 
       // Cargar catálogo de libros y librería del usuario en paralelo
       const [booksResult, libraryResult] = await Promise.all([
@@ -99,7 +99,7 @@ const StoreScreen = ({ navigation, route }) => {
 
     } catch (error) {
       console.error('Error cargando catálogo:', error);
-      setError(error.message);
+      setStoreError(error.message);
       
       if (error.message.includes('conexión') || error.message.includes('network')) {
         showNetworkError();
