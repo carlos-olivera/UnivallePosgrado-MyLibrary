@@ -230,6 +230,7 @@ export const AuthProvider = ({ children }) => {
       
       console.log('📝 Registrando nuevo usuario:', email);
       
+      
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       
       // Crear perfil en Firestore
