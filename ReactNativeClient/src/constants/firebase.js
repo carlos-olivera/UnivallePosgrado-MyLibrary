@@ -5,19 +5,47 @@
  * usando emuladores y para producción con configuración real.
  */
 
+import { Platform } from 'react-native';
+import Constants from 'expo-constants';
+
+// Función para obtener la URL correcta del emulador
+const getEmulatorHost = () => {
+  let host;
+  
+  // En web, usar localhost
+  if (Platform.OS === 'web') {
+    host = 'localhost';
+  }
+  // En iOS Simulator, usar localhost
+  else if (Platform.OS === 'ios' && Constants.isDevice === false) {
+    host = 'localhost';
+  }
+  // En Android Emulator, usar la IP especial de Android
+  else if (Platform.OS === 'android' && !Constants.isDevice) {
+    host = '10.0.2.2';
+  }
+  // Para dispositivos físicos, usar la IP de la máquina de desarrollo
+  else {
+    host = '192.168.50.161';
+  }
+  
+  console.log(`🌐 Emulator Host: ${host} (Platform: ${Platform.OS}, isDevice: ${Constants.isDevice})`);
+  return host;
+};
+
 // Configuración para emuladores locales (desarrollo)
 export const EMULATOR_CONFIG = {
   // URL base para emuladores locales
-  AUTH_URL: 'http://localhost:9099',
-  FIRESTORE_URL: 'http://localhost:8080',
-  STORAGE_URL: 'http://localhost:9199',
+  AUTH_URL: `http://${getEmulatorHost()}:9099`,
+  FIRESTORE_URL: `http://${getEmulatorHost()}:8080`, 
+  STORAGE_URL: `http://${getEmulatorHost()}:9199`,
   
   // Configuración del proyecto demo
   PROJECT_ID: 'univalle-mylibrary',
   
   // Settings para emuladores
   FIRESTORE_SETTINGS: {
-    host: 'localhost:8080',
+    host: `${getEmulatorHost()}:8080`,
     ssl: false,
   }
 };

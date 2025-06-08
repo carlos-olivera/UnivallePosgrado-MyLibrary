@@ -13,12 +13,13 @@ import {
   LoadingOverlay 
 } from '../../components/common';
 import { 
-  Input,
+  BasicInput,
   EmailInput, 
   PasswordInput, 
   useInputValidation, 
   validators 
 } from '../../components/forms/Input';
+
 
 /**
  * **PANTALLA DE REGISTRO EDUCATIVA** 📝
@@ -317,7 +318,7 @@ const SignupScreen = ({ navigation }) => {
 
             <View style={dynamicStyles.nameRow}>
               <View style={[dynamicStyles.inputContainer, dynamicStyles.nameInput]}>
-                <Input
+                <BasicInput
                   label="Nombre"
                   value={firstName.value}
                   onChangeText={firstName.handleChangeText}
@@ -332,7 +333,7 @@ const SignupScreen = ({ navigation }) => {
               </View>
 
               <View style={[dynamicStyles.inputContainer, dynamicStyles.nameInput]}>
-                <Input
+                <BasicInput
                   ref={lastNameRef}
                   label="Apellido"
                   value={lastName.value}

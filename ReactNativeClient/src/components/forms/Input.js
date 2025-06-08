@@ -359,6 +359,13 @@ export const TextAreaInput = (props) => (
   />
 );
 
+export const BasicInput = (props) => (
+  <Input
+    autoCapitalize="none"
+    {...props}
+  />
+);
+
 export const PhoneInput = (props) => (
   <Input
     keyboardType="phone-pad"

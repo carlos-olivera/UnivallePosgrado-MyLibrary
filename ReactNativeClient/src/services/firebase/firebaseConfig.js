@@ -84,7 +84,10 @@ const setupEmulators = (config) => {
 
     // Configurar emulador de Firestore
     try {
-      connectFirestoreEmulator(db, 'localhost', 8080);
+      // Extraer host y puerto de la URL
+      const firestoreHost = config.FIRESTORE_URL.replace('http://', '').split(':')[0];
+      const firestorePort = parseInt(config.FIRESTORE_URL.split(':')[2] || '8080');
+      connectFirestoreEmulator(db, firestoreHost, firestorePort);
       console.log('   ✅ Firestore Emulator conectado en', config.FIRESTORE_URL);
     } catch (firestoreError) {
       console.log('   ⚠️ Firestore Emulator ya conectado:', firestoreError.message);
@@ -92,7 +95,10 @@ const setupEmulators = (config) => {
 
     // Configurar emulador de Storage
     try {
-      connectStorageEmulator(storage, 'localhost', 9199);
+      // Extraer host y puerto de la URL
+      const storageHost = config.STORAGE_URL.replace('http://', '').split(':')[0];
+      const storagePort = parseInt(config.STORAGE_URL.split(':')[2] || '9199');
+      connectStorageEmulator(storage, storageHost, storagePort);
       console.log('   ✅ Storage Emulator conectado en', config.STORAGE_URL);
     } catch (storageError) {
       console.log('   ⚠️ Storage Emulator ya conectado:', storageError.message);
