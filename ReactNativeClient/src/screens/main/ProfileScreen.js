@@ -315,7 +315,7 @@ const ProfileScreen = ({ navigation }) => {
         
         <StatsCard
           title="Promedio"
-          value={stats.promedioCalificacion?.toFixed(1) || '-'}
+          value={stats.promedioCalificacion ? stats.promedioCalificacion.toFixed(1) : '-'}
           icon="chart-line"
           color={theme.customColors.success}
           subtitle="calificación"

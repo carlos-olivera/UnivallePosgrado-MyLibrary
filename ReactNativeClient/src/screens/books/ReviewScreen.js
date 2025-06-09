@@ -222,7 +222,7 @@ const ReviewScreen = ({ route, navigation }) => {
       if (result.success) {
         // Filtrar reseñas que no sean del usuario actual
         const filtered = result.data.filter(review => 
-          review.usuarioId !== user.uid && !review.esPrivada
+          review.userId !== user.uid && !review.esPrivada
         );
         setOtherReviews(filtered);
       }
@@ -266,8 +266,8 @@ const ReviewScreen = ({ route, navigation }) => {
       setSaving(true);
       
       const reviewData = {
-        libroId: book.bookId,
-        usuarioId: user.uid,
+        bookId: book.bookId,  // Cambio de libroId a bookId para consistencia
+        userId: user.uid,
         calificacion: rating,
         texto: reviewText.trim(),
         esPrivada: isPrivate,
@@ -275,13 +275,13 @@ const ReviewScreen = ({ route, navigation }) => {
         fechaActualizacion: new Date().toISOString(),
         
         // Información del libro para facilitar consultas
-        libroTitulo: book.titulo,
-        libroAutor: book.autor,
-        libroPortada: book.portadaUrl,
+        bookTitle: book.titulo,  // Cambio de libroTitulo a bookTitle
+        bookAuthor: book.autor,  // Cambio de libroAutor a bookAuthor
+        bookCover: book.portadaUrl,  // Cambio de libroPortada a bookCover
         
         // Información del usuario
-        usuarioNombre: userProfile?.nombre || user.displayName || 'Usuario',
-        usuarioEmail: user.email
+        userName: userProfile?.nombre || user.displayName || 'Usuario',  // Cambio de usuarioNombre a userName
+        userEmail: user.email  // Cambio de usuarioEmail a userEmail
       };
 
       let result;
@@ -451,10 +451,10 @@ const ReviewScreen = ({ route, navigation }) => {
           <View style={dynamicStyles.reviewHeader}>
             <Avatar.Text
               size={40}
-              label={review.usuarioNombre.charAt(0).toUpperCase()}
+              label={review.userName.charAt(0).toUpperCase()}
             />
             <View style={dynamicStyles.reviewerInfo}>
-              <Text style={dynamicStyles.reviewerName}>{review.usuarioNombre}</Text>
+              <Text style={dynamicStyles.reviewerName}>{review.userName}</Text>
               <Text style={dynamicStyles.reviewDate}>
                 {new Date(review.fechaCreacion).toLocaleDateString()}
               </Text>

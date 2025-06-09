@@ -561,7 +561,7 @@ class FirestoreService {
         reviewsSnapshot.forEach((doc) => {
           sumaCalificaciones += doc.data().calificacion;
         });
-        stats.promedioCalificacion = (sumaCalificaciones / reviewsSnapshot.size).toFixed(1);
+        stats.promedioCalificacion = sumaCalificaciones / reviewsSnapshot.size;
       }
 
       console.log('✅ Estadísticas obtenidas:', stats);
@@ -613,6 +613,21 @@ class FirestoreService {
   async createReview(reviewData) {
     try {
       console.log('⭐➕ FirestoreService: Creando nueva reseña');
+      console.log('Datos de reseña:', reviewData);
+      
+      // Validar campos requeridos
+      if (!reviewData.userId) {
+        throw new Error('userId es requerido');
+      }
+      if (!reviewData.bookId) {
+        throw new Error('bookId es requerido');
+      }
+      if (!reviewData.calificacion || reviewData.calificacion < 1 || reviewData.calificacion > 5) {
+        throw new Error('calificacion debe estar entre 1 y 5');
+      }
+      if (!reviewData.texto || reviewData.texto.trim().length < 10) {
+        throw new Error('texto debe tener al menos 10 caracteres');
+      }
       
       const reviewDoc = {
         ...reviewData,
@@ -629,7 +644,7 @@ class FirestoreService {
       console.error('❌ Error creando reseña:', error);
       return {
         success: false,
-        error: 'Error creando reseña'
+        error: error.message || 'Error creando reseña'
       };
     }
   }

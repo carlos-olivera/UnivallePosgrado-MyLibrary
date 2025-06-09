@@ -276,7 +276,7 @@ const HomeScreen = ({ navigation }) => {
         
         <StatsCard
           title="Promedio"
-          value={stats.promedioCalificacion || '-'}
+          value={stats.promedioCalificacion ? stats.promedioCalificacion.toFixed(1) : '-'}
           icon="chart-line"
           color={theme.customColors.success}
           subtitle="calificación"
