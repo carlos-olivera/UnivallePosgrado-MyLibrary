@@ -29,7 +29,34 @@ class BooksApiService {
     this.cache = new Map();
     this.cacheTimeout = 5 * 60 * 1000; // 5 minutos
     
+    // Email del usuario para autorización
+    this.userEmail = null;
+    
     console.log('📚 BooksApiService inicializado');
+  }
+
+  // ===================================
+  // 🔐 CONFIGURACIÓN DE AUTORIZACIÓN
+  // ===================================
+
+  /**
+   * **ESTABLECER EMAIL DEL USUARIO** 👤
+   * 
+   * Configura el email del usuario para incluir en el header Authorization.
+   */
+  setUserEmail(email) {
+    this.userEmail = email;
+    console.log('🔐 Email de usuario configurado para autorización:', email ? email.substring(0, 3) + '***' : 'null');
+  }
+
+  /**
+   * **LIMPIAR AUTORIZACIÓN** 🧹
+   * 
+   * Limpia el email del usuario (al cerrar sesión).
+   */
+  clearAuthorization() {
+    this.userEmail = null;
+    console.log('🧹 Autorización limpiada');
   }
 
   // ===================================
@@ -227,6 +254,7 @@ class BooksApiService {
    * **REALIZAR REQUEST HTTP** 🌐
    * 
    * Método centralizado para todas las peticiones HTTP.
+   * Incluye automáticamente el header Authorization con el email del usuario.
    */
   async makeRequest(method, endpoint, body = null) {
     const controller = new AbortController();
@@ -236,14 +264,23 @@ class BooksApiService {
       const url = `${this.baseURL}${endpoint}`;
       console.log(`🌐 ${method} ${url}`);
 
+      // Configurar headers base
+      const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      // Agregar Authorization header si hay usuario autenticado
+      if (this.userEmail) {
+        headers['Authorization'] = this.userEmail;
+        console.log('🔐 Authorization header incluido:', this.userEmail.substring(0, 3) + '***');
+      } else {
+        console.warn('⚠️ No hay email de usuario para Authorization header');
+      }
+
       const config = {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          // Agregar headers adicionales si la API los requiere
-          // 'Authorization': 'Bearer token',
-          // 'Accept': 'application/json'
-        },
+        headers,
         signal: controller.signal
       };
 

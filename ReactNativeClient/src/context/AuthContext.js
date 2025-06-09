@@ -9,6 +9,7 @@ import {
 import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 import { getFirebaseAuth, getFirebaseFirestore } from '../services/firebase/firebaseConfig';
+import { booksApiService } from '../services/api/booksApiService';
 
 /**
  * **CONTEXT DE AUTENTICACIÓN EDUCATIVO** 👤
@@ -67,6 +68,9 @@ export const AuthProvider = ({ children }) => {
           console.log('✅ Usuario autenticado:', firebaseUser.email);
           setUser(firebaseUser);
           
+          // Configurar email en BooksApiService para autorización
+          booksApiService.setUserEmail(firebaseUser.email);
+          
           // Cargar perfil del usuario desde Firestore
           await loadUserProfile(firebaseUser.uid);
           
@@ -77,6 +81,9 @@ export const AuthProvider = ({ children }) => {
           console.log('👋 Usuario no autenticado');
           setUser(null);
           setUserProfile(null);
+          
+          // Limpiar autorización en BooksApiService
+          booksApiService.clearAuthorization();
         }
       } catch (error) {
         console.error('❌ Error en listener de auth:', error);
@@ -181,6 +188,9 @@ export const AuthProvider = ({ children }) => {
       console.log('🔐 Intentando iniciar sesión:', email);
       
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+      // Configurar email en BooksApiService para autorización
+      booksApiService.setUserEmail(userCredential.user.email);
       
       console.log('✅ Sesión iniciada exitosamente');
       return { success: true, user: userCredential.user };
