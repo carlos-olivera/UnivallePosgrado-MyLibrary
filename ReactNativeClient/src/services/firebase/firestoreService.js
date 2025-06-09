@@ -575,6 +575,139 @@ class FirestoreService {
       };
     }
   }
+
+  // ===================================
+  // 🔧 MÉTODOS ADICIONALES REQUERIDOS
+  // ===================================
+
+  /**
+   * **ACTUALIZAR LIBRO EN LIBRERÍA** 📖✏️
+   */
+  async updateBookInLibrary(userId, bookId, updateData) {
+    try {
+      console.log('📖✏️ FirestoreService: Actualizando libro en librería', bookId);
+      
+      await updateDoc(
+        doc(this.db, 'libraries', userId, 'books', bookId),
+        {
+          ...updateData,
+          fechaActualizacion: serverTimestamp()
+        }
+      );
+      
+      console.log('✅ Libro actualizado en la librería');
+      return { success: true };
+
+    } catch (error) {
+      console.error('❌ Error actualizando libro:', error);
+      return {
+        success: false,
+        error: 'Error actualizando libro en la librería'
+      };
+    }
+  }
+
+  /**
+   * **CREAR RESEÑA** ⭐➕
+   */
+  async createReview(reviewData) {
+    try {
+      console.log('⭐➕ FirestoreService: Creando nueva reseña');
+      
+      const reviewDoc = {
+        ...reviewData,
+        fechaCreacion: serverTimestamp(),
+        fechaActualizacion: serverTimestamp()
+      };
+
+      const docRef = await addDoc(collection(this.db, 'reviews'), reviewDoc);
+      
+      console.log('✅ Reseña creada con ID:', docRef.id);
+      return { success: true, data: { id: docRef.id, ...reviewDoc } };
+
+    } catch (error) {
+      console.error('❌ Error creando reseña:', error);
+      return {
+        success: false,
+        error: 'Error creando reseña'
+      };
+    }
+  }
+
+  /**
+   * **ACTUALIZAR RESEÑA** ⭐✏️
+   */
+  async updateReview(reviewId, updateData) {
+    try {
+      console.log('⭐✏️ FirestoreService: Actualizando reseña', reviewId);
+      
+      await updateDoc(
+        doc(this.db, 'reviews', reviewId),
+        {
+          ...updateData,
+          fechaActualizacion: serverTimestamp()
+        }
+      );
+      
+      console.log('✅ Reseña actualizada');
+      return { success: true };
+
+    } catch (error) {
+      console.error('❌ Error actualizando reseña:', error);
+      return {
+        success: false,
+        error: 'Error actualizando reseña'
+      };
+    }
+  }
+
+  /**
+   * **ELIMINAR RESEÑA (SOBRESCRIBIR MÉTODO)** ⭐❌
+   */
+  async deleteReview(reviewId) {
+    try {
+      console.log('⭐❌ FirestoreService: Eliminando reseña', reviewId);
+      
+      await deleteDoc(doc(this.db, 'reviews', reviewId));
+      
+      console.log('✅ Reseña eliminada');
+      return { success: true };
+
+    } catch (error) {
+      console.error('❌ Error eliminando reseña:', error);
+      return {
+        success: false,
+        error: 'Error eliminando reseña'
+      };
+    }
+  }
+
+  /**
+   * **ACTUALIZAR PERFIL DE USUARIO** 👤✏️
+   */
+  async updateUserProfile(userId, updateData) {
+    try {
+      console.log('👤✏️ FirestoreService: Actualizando perfil de usuario', userId);
+      
+      await updateDoc(
+        doc(this.db, 'users', userId),
+        {
+          ...updateData,
+          fechaActualizacion: serverTimestamp()
+        }
+      );
+      
+      console.log('✅ Perfil de usuario actualizado');
+      return { success: true };
+
+    } catch (error) {
+      console.error('❌ Error actualizando perfil:', error);
+      return {
+        success: false,
+        error: 'Error actualizando perfil de usuario'
+      };
+    }
+  }
 }
 
 // **EXPORTAR INSTANCIA SINGLETON** 🎯

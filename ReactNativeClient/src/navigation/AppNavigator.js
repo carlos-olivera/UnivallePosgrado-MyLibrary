@@ -16,12 +16,12 @@ import SignupScreen from '../screens/auth/SignupScreen';
 // **PANTALLAS PRINCIPALES** 🏠
 import HomeScreen from '../screens/main/HomeScreen';
 import StoreScreen from '../screens/main/StoreScreen';
-// import LibraryScreen from '../screens/main/LibraryScreen';
-// import ProfileScreen from '../screens/main/ProfileScreen';
+import LibraryScreen from '../screens/main/LibraryScreen';
+import ProfileScreen from '../screens/main/ProfileScreen';
 
 // **PANTALLAS SECUNDARIAS** 📄
-// import BookDetailScreen from '../screens/books/BookDetailScreen';
-// import ReviewScreen from '../screens/books/ReviewScreen';
+import BookDetailScreen from '../screens/books/BookDetailScreen';
+import ReviewScreen from '../screens/books/ReviewScreen';
 
 /**
  * **NAVEGACIÓN PRINCIPAL EDUCATIVA** 🧭
@@ -121,10 +121,9 @@ const MainTabNavigator = () => {
         }}
       />
       
-      {/* Placeholder para futuras pantallas */}
       <Tab.Screen 
         name="Library" 
-        component={HomeScreen} // Temporal
+        component={LibraryScreen}
         options={{
           tabBarLabel: 'Librería',
           tabBarAccessibilityLabel: 'Mi librería personal'
@@ -133,7 +132,7 @@ const MainTabNavigator = () => {
       
       <Tab.Screen 
         name="Profile" 
-        component={HomeScreen} // Temporal
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Perfil',
           tabBarAccessibilityLabel: 'Mi perfil y configuración'
@@ -248,13 +247,12 @@ const MainNavigator = () => {
       />
       
       {/* **PANTALLAS MODALES/SECUNDARIAS** */}
-      {/* Placeholder para futuras pantallas
       <Stack.Screen 
         name="BookDetail" 
         component={BookDetailScreen}
         options={({ route }) => ({
           title: route.params?.book?.titulo || 'Detalle del Libro',
-          presentation: 'modal',
+          presentation: 'card',
         })}
       />
       
@@ -266,7 +264,6 @@ const MainNavigator = () => {
           presentation: 'modal',
         }}
       />
-      */}
     </Stack.Navigator>
   );
 };

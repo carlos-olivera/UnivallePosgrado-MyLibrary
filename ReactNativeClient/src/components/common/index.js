@@ -34,3 +34,14 @@ export {
   ReviewsEmptyState,
   useEmptyState 
 } from './EmptyState';
+
+// **COMPONENTES DE IMÁGENES** 🖼️
+export { 
+  default as BookImage, 
+  SmallBookImage, 
+  MediumBookImage, 
+  LargeBookImage, 
+  SquareBookImage, 
+  HeroBookImage, 
+  useBookImage 
+} from './BookImage';
