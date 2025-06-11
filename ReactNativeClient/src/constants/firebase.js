@@ -22,7 +22,7 @@ const getEmulatorHost = () => {
   }
   // En Android Emulator, usar la IP especial de Android
   else if (Platform.OS === 'android' && !Constants.isDevice) {
-    host = '10.0.2.2';
+    host = '192.168.50.161';
   }
   // Para dispositivos físicos, usar la IP de la máquina de desarrollo
   else {
