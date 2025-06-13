@@ -1,0 +1,26 @@
+{
+  "name": "firebase-storage-emulator-demo",
+  "version": "1.0.0",
+  "description": "Demo educativo de Firebase Storage con emulador local",
+  "main": "index.js",
+  "scripts": {
+    "start": "firebase emulators:start",
+    "init": "firebase init",
+    "stop": "firebase emulators:exec --only storage 'echo Emulador detenido'"
+  },
+  "keywords": [
+    "firebase",
+    "storage",
+    "emulator",
+    "demo",
+    "educational"
+  ],
+  "author": "MyLibrary Educational Demo",
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

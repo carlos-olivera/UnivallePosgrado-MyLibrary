@@ -1,0 +1,42 @@
+// **REGLAS DE FIREBASE STORAGE - DEMO EDUCATIVO** 📁
+//
+// Estas reglas permiten acceso completo para propósitos de demostración.
+// En un entorno de producción, estas reglas deben ser más restrictivas.
+//
+// Conceptos educativos demostrados:
+// - Sintaxis básica de Storage Rules
+// - Permisos de lectura y escritura
+// - Estructura de paths en Storage
+
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // **REGLA PERMISIVA PARA DEMO** ⚠️
+    // Permite lectura y escritura a cualquier archivo
+    // NUNCA usar en producción
+    match /{allPaths=**} {
+      // Permitir lectura a cualquier usuario (incluso anónimos)
+      allow read: if true;
+      
+      // Permitir escritura a cualquier usuario
+      // En producción: verificar autenticación y validar archivos
+      allow write: if true;
+    }
+    
+    // **EJEMPLO DE REGLAS MÁS SEGURAS** 🔒
+    // (comentadas para el demo, descomentar para usar)
+    /*
+    match /images/{imageId} {
+      // Solo usuarios autenticados pueden leer
+      allow read: if request.auth != null;
+      
+      // Solo usuarios autenticados pueden escribir
+      // y solo archivos de imagen menores a 5MB
+      allow write: if request.auth != null
+                   && resource.contentType.matches('image/.*')
+                   && resource.size < 5 * 1024 * 1024;
+    }
+    */
+  }
+}
